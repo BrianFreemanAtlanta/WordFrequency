@@ -17,9 +17,6 @@ namespace WordFrequency
 
         public const string guidWordFrequencyPackageCmdSetString = "afafed10-adb8-46d1-885d-2d44489d89b6";
         public static Guid guidWordFrequencyPackageCmdSet = new Guid(guidWordFrequencyPackageCmdSetString);
-
-        public const string guidImagesString = "1a0e20fe-2d93-4939-9c90-ea34fe7b4692";
-        public static Guid guidImages = new Guid(guidImagesString);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -28,11 +25,5 @@ namespace WordFrequency
     {
         public const int MyMenuGroup = 0x1020;
         public const int WordCountId = 0x0100;
-        public const int bmpPic1 = 0x0001;
-        public const int bmpPic2 = 0x0002;
-        public const int bmpPicSearch = 0x0003;
-        public const int bmpPicX = 0x0004;
-        public const int bmpPicArrows = 0x0005;
-        public const int bmpPicStrikethrough = 0x0006;
     }
 }

@@ -12,7 +12,7 @@ namespace WordFrequency
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class WordCount
+    internal sealed class WordCountCommand
     {
         /// <summary>
         /// Command ID.
@@ -30,12 +30,12 @@ namespace WordFrequency
         private readonly AsyncPackage package;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WordCount"/> class.
+        /// Initializes a new instance of the <see cref="WordCountCommand"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private WordCount(AsyncPackage package, OleMenuCommandService commandService)
+        private WordCountCommand(AsyncPackage package, OleMenuCommandService commandService)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -48,7 +48,7 @@ namespace WordFrequency
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static WordCount Instance
+        public static WordCountCommand Instance
         {
             get;
             private set;
@@ -76,7 +76,7 @@ namespace WordFrequency
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new WordCount(package, commandService);
+            Instance = new WordCountCommand(package, commandService);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace WordFrequency
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "WordCount";
+            string title = "WordCountCommand";
 
             // Show a message box to prove we were here
             VsShellUtilities.ShowMessageBox(
