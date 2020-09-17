@@ -79,7 +79,12 @@ namespace WordFrequency.UnitTests
         {
             string test = @"one 1";
             Assert.That(WordCounter.GetWordCount(test), Is.EqualTo(new Dictionary<string, int> { { "one", 1 } }));
-            //Approvals.VerifyAll(WordCounter.GetWordCount(test));
+        }
+        [Test]
+        public void IncludesUnderscoreVariables()
+        {
+            string test = @"_Local";
+            Assert.That(WordCounter.GetWordCount(test), Is.EqualTo(new Dictionary<string, int> { { "_Local", 1 } }));
         }
 
     }
