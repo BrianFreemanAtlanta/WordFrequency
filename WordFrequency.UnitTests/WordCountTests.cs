@@ -74,6 +74,13 @@ namespace WordFrequency.UnitTests
             //            Assert.That(WordCounter.GetWordCount("If (starred) If"), Is.EqualTo(new Dictionary<string, int> { { "If", 2 }, { "starred", 1 } }));
             Approvals.VerifyAll(WordCounter.GetWordCount(test));
         }
+        [Test]
+        public void IgnoresNumbers()
+        {
+            string test = @"one 1";
+            Assert.That(WordCounter.GetWordCount(test), Is.EqualTo(new Dictionary<string, int> { { "one", 1 } }));
+            //Approvals.VerifyAll(WordCounter.GetWordCount(test));
+        }
 
     }
 }

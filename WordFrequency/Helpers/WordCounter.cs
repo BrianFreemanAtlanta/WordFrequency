@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace WordFrequency.Helpers
@@ -13,17 +14,24 @@ namespace WordFrequency.Helpers
         public static Dictionary<string, int> GetWordCount(string code)
         {
             var retDictionary = new Dictionary<string, int>();
-            var words = code.Split(codeSplitters, StringSplitOptions.RemoveEmptyEntries);
+            int dummyOut;
+
+            //var words = code.Split(codeSplitters, StringSplitOptions.RemoveEmptyEntries);
+            var words = Regex.Split(code, @"[\W]");
             foreach (string word in words)
             {
+                if (word.Length <= 0) continue;
+                if (int.TryParse(word,out dummyOut)) continue;
+                
                 if (retDictionary.ContainsKey(word))
                 {
-                    retDictionary[word] ++ ;
+                    retDictionary[word]++;
                 }
                 else
                 {
-                    retDictionary.Add(word,1);
+                    retDictionary.Add(word, 1);
                 }
+
             }
             return retDictionary;
         }
