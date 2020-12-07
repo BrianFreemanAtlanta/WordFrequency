@@ -86,6 +86,25 @@ namespace WordFrequency.UnitTests
             string test = @"_Local";
             Assert.That(WordCounter.GetWordCount(test), Is.EqualTo(new Dictionary<string, int> { { "_Local", 1 } }));
         }
-
+        [Test]
+        public void QuotedLiterals()
+        {
+            string test = "var mySentence = \"the test\"";
+            Assert.That(WordCounter.GetWordCount(test), Is.EqualTo(new Dictionary<string, int> { { "var", 1 }, { "mySentence", 1 }, { "the", 1 }, { "test", 1 } }));
+        }
+        [Test]
+        public void OrderResults1()
+        {
+            string test = "this happy test is test test is";
+            //Approvals.VerifyAll(WordCounter.GetWordCount(test));
+            Assert.That(WordCounter.GetWordCount(test), Is.EqualTo(new Dictionary<string, int> { { "test", 3 }, { "is", 2 }, {"happy", 1}, { "this", 1 } }));
+        }
+        [Test]
+        public void OrderResults2()
+        {
+            string test = "is test test is test this";
+            //Approvals.VerifyAll(WordCounter.GetWordCount(test));
+            Assert.That(WordCounter.GetWordCount(test), Is.EqualTo(new Dictionary<string, int> { { "test", 3 }, { "is", 2 }, { "this", 1 } }));
+        }
     }
 }

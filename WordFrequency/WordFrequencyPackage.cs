@@ -32,6 +32,7 @@ namespace WordFrequency
         /// WordFrequencyPackage GUID string.
         /// </summary>
         public const string PackageGuidString = "88148790-1ff4-4ee5-aa2e-bf49c736d3b2";
+        internal Cancellation PackageCancellation { get; } = new Cancellation();
 
         #region Package Members
 
@@ -48,6 +49,7 @@ namespace WordFrequency
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await WordCountCommand.InitializeAsync(this);
+            VisualStudioInteraction.Initialize(PackageCancellation);
         }
 
         #endregion

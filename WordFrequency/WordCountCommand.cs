@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel.Design;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using WordFrequency.Helpers;
 using Task = System.Threading.Tasks.Task;
 
 namespace WordFrequency
@@ -89,17 +91,28 @@ namespace WordFrequency
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "WordCountCommand";
+            //string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
+            //string title = "WordCountCommand";
 
+            string message =  VisualStudioInteraction.GetSelectedText(ServiceProvider);
+            var words = WordCounter.GetWordCount(message);
+            
+            VisualStudioInteraction.OutputWindowWriteLine(string.Format("{0,-40}{1,5}", "Word", "Count"));
+            VisualStudioInteraction.OutputWindowWriteLine(new string('-',45));
+            foreach (var word in words.OrderByDescending(w => w.Value))
+            {
+                
+                var formatString = string.Format("{0,-40}{1,5:N0}", word.Key, word.Value);
+                VisualStudioInteraction.OutputWindowWriteLine(formatString);
+            }
             // Show a message box to prove we were here
-            VsShellUtilities.ShowMessageBox(
-                this.package,
-                message,
-                title,
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            //VsShellUtilities.ShowMessageBox(
+            //    this.package,
+            //    message,
+            //    title,
+            //    OLEMSGICON.OLEMSGICON_INFO,
+            //    OLEMSGBUTTON.OLEMSGBUTTON_OK,
+            //    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
         }
     }
 }
